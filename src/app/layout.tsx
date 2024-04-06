@@ -25,7 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html suppressHydrationWarning>
       <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
       </Head>
       <body
         className={cn(
