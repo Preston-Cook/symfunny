@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '../context/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Head from 'next/head';
 
 export const metadata: Metadata = {
   title: 'Symfunny',
@@ -23,6 +24,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html suppressHydrationWarning>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
       <body
         className={cn(
           'min-h-screen flex flex-col bg-background font-sans antialiased',
