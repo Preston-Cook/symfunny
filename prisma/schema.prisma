@@ -14,9 +14,12 @@ datasource db {
 }
 
 model Sound {
-  id      Int     @id @default(autoincrement())
-  name    String
-  creator Creator
+  id        Int      @id @default(autoincrement())
+  name      String
+  creator   Creator
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Creator {
