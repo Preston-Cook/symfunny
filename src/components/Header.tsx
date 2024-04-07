@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import HamburgerMenu from './HamburgerMenu';
 import DarkModeToggle from './DarkModeToggle';
 import { Cedarville_Cursive as FontCursive } from 'next/font/google';

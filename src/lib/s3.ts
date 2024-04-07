@@ -1,4 +1,5 @@
 import { S3Client } from '@aws-sdk/client-s3';
+import { log } from 'console';
 
 const region = process.env.S3_BUCKET_REGION as string;
 const accessKeyId = process.env.S3_BUCKET_ACCESS_KEY as string;

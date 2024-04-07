@@ -8,7 +8,7 @@ import { CreateButton } from './CreateButton';
 
 export default function SearchBar() {
   return (
-    <div className="flex max-w-md items-center mx-auto mt-10">
+    <div className="flex max-w-md lg:max-w-lg items-center mx-auto mt-10">
       <FilterButton />
       <Input
         className="bg-secondary rounded-tr-none rounded-br-none focus-visible:ring-offset-0"
