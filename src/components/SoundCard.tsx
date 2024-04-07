@@ -28,12 +28,14 @@ export default function SoundCard({
   url,
   createdAt,
 }: SoundCardProps) {
-  const [audio] = useState(new Audio(url));
+  const [audio] = useState<HTMLAudioElement | undefined>(
+    typeof Audio !== 'undefined' ? new Audio(url) : undefined,
+  );
 
   useEffect(() => {
     return () => {
-      audio.pause();
-      audio.currentTime = 0;
+      audio?.pause();
+      if (audio) audio.currentTime = 0;
     };
   }, [audio]);
 
@@ -69,8 +71,8 @@ export default function SoundCard({
       <CardContent className="text-center">
         <Button
           className="w-[80%]"
-          onClick={() => audio.play()}
-          disabled={audio.duration > 0 && !audio.paused}
+          onClick={() => audio?.play()}
+          disabled={audio && audio.duration > 0 && !audio.paused}
         >
           Play Sound <AudioLines className="ml-2" />
         </Button>
