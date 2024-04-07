@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Symfunny',
-  description: 'A soundboard app by Preston Cook',
+  description: 'A Soundboard App by Preston Cook',
 };
 
 const fontSans = FontSans({
