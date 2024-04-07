@@ -3,7 +3,19 @@ import { createSoundSchemaServer } from '@/schemas/CreateSoundSchema';
 import prisma from '@/lib/db';
 import { ZodError } from 'zod';
 
-export async function GET() {}
+export async function GET() {
+  let sounds;
+  try {
+    sounds = await prisma.sound.findMany();
+  } catch (err) {
+    return NextResponse.json(
+      { error: (err as Error).message },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ data: sounds }, { status: 200 });
+}
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -41,7 +53,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ message: 'created' }, { status: 201 });
 }
-
-export async function DELETE() {}
-
-export async function PATCH() {}

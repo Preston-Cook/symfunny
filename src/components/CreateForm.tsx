@@ -25,6 +25,7 @@ import {
 import { DialogFooter } from './ui/dialog';
 import { Mic, Disc, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useToast } from './ui/use-toast';
 
 const ACCEPTED_MIME_TYPES = [
   'audio/wav',
@@ -33,9 +34,15 @@ const ACCEPTED_MIME_TYPES = [
   'video/webm',
 ];
 
+enum Creator {
+  David = 'David',
+  Jeremiah = 'Jeremiah',
+}
+
 export default function CreateForm() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const { startRecording, stopRecording, isRecording, recordingBlob } =
     useAudioRecorder();
@@ -44,7 +51,7 @@ export default function CreateForm() {
     resolver: zodResolver(createSoundSchemaClient),
     defaultValues: {
       name: undefined,
-      creator: undefined,
+      creator: Creator.David,
       soundFile: undefined,
     },
   });
@@ -112,7 +119,6 @@ export default function CreateForm() {
 
     const { name, creator } = values;
     const url = signedUrl.split('?')[0];
-    console.log(url);
 
     // post remaining data to server
     const res3 = await fetch('/api/sounds', {
@@ -137,7 +143,13 @@ export default function CreateForm() {
 
     // reset fields
     setFile(null);
-    reset();
+    setValue('name', '');
+    setValue('creator', Creator.David);
+
+    toast({
+      title: 'Success!',
+      description: 'Sound Created',
+    });
 
     setIsLoading(false);
   }

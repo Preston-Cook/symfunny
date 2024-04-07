@@ -6,6 +6,7 @@ import { ThemeProvider } from '../context/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Head from 'next/head';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Symfunny',
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Header />
           <main className="flex-1 min-h-[90vh]">{children}</main>
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

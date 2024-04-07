@@ -18,6 +18,10 @@ export async function GET() {
   try {
     signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 60 });
   } catch (err) {
+    console.log(err);
+
+    console.log('I here');
+
     return NextResponse.json({ error: err }, { status: 500 });
   }
 
