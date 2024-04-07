@@ -9,7 +9,7 @@ export const createSoundSchemaClient = z.object({
   name: z.string({
     required_error: 'Title Required',
   }),
-  creator: z.nativeEnum(Creator, {
+  creator: z.string({
     required_error: 'Creator Required',
   }),
   soundFile: z.any().optional(),

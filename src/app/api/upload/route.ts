@@ -20,8 +20,6 @@ export async function GET() {
   } catch (err) {
     console.log(err);
 
-    console.log('I here');
-
     return NextResponse.json({ error: err }, { status: 500 });
   }
 

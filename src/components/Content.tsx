@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import SoundCard from './SoundCard';
 import { ChangeEvent, useState } from 'react';
 import SmithWatermanGotoh from '@/lib/smithWatermanGotoh';
+import { CircleOff } from 'lucide-react';
+import NoResults from './NoResults';
 
 interface ContentProps {
   sounds: Sound[];
@@ -27,6 +29,29 @@ interface FilterProps {
 }
 
 const swg = new SmithWatermanGotoh(-2, 1, -1);
+
+function sortByNameAndCreatedAt(
+  sounds: Sound[],
+  nameOrder: string = 'asc',
+  createdAtOrder: string = 'asc',
+) {
+  return [...sounds].sort((a, b) => {
+    let soundComparison = a.name.localeCompare(b.name);
+    if (nameOrder === 'desc') {
+      soundComparison *= -1; // Reverse order for descending
+    }
+    if (soundComparison !== 0) {
+      return soundComparison;
+    }
+
+    // If names are equal, compare by createdAt
+    let createdAtComparison = a.createdAt.getTime() - b.createdAt.getTime();
+    if (createdAtOrder === 'desc') {
+      createdAtComparison *= -1; // Reverse order for descending
+    }
+    return createdAtComparison;
+  });
+}
 
 export default function Content({ sounds }: ContentProps) {
   const [{ q, creator, sortAscendingCreation, sortAscendingName }, setFilters] =
@@ -55,6 +80,13 @@ export default function Content({ sounds }: ContentProps) {
     }));
   }
 
+  function handleCreatorChange(c: string) {
+    setFilters((prev) => ({
+      ...prev,
+      creator: c,
+    }));
+  }
+
   function filterSounds(sound: Sound) {
     // filter by query
     const cleanedQuery = q.toLowerCase().replace(' ', '');
@@ -75,7 +107,12 @@ export default function Content({ sounds }: ContentProps) {
   const randomTitle = titles[Math.floor(Math.random() * titles.length)];
 
   // create filtered sounds
-  const filteredSounds = sounds.filter(filterSounds);
+  let filteredSounds = sounds.filter(filterSounds);
+  filteredSounds = sortByNameAndCreatedAt(
+    filteredSounds,
+    sortAscendingName ? 'asc' : 'desc',
+    sortAscendingCreation ? 'asc' : 'desc',
+  );
 
   return (
     <div className="sm:px-6 lg:px-8 py-8 flex flex-col justify-around gap-10">
@@ -85,6 +122,7 @@ export default function Content({ sounds }: ContentProps) {
         </h1>
         <p className="mb-12 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 "></p>
         <SearchBar
+          handleCreatorChange={handleCreatorChange}
           handleAscendingCreationSortChange={handleAscendingCreationSortChange}
           handleAscendingNameSortChange={handleAscendingNameSortChange}
           sortAscendingCreation={sortAscendingCreation}
@@ -95,11 +133,15 @@ export default function Content({ sounds }: ContentProps) {
           handleChange={handleFilterChange}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 place-items-center mx-auto">
-        {filteredSounds.map((sound) => (
-          <SoundCard key={uuidv4()} />
-        ))}
-      </div>
+      {filteredSounds.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 place-items-center mx-auto">
+          {filteredSounds.map((sound) => (
+            <SoundCard key={uuidv4()} />
+          ))}
+        </div>
+      ) : (
+        <NoResults query={q} creator={creator ?? 'Both'} />
+      )}
     </div>
   );
 }

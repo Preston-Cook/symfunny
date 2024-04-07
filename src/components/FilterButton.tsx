@@ -22,9 +22,11 @@ interface FilterButtonProps {
   sortAscendingName: boolean;
   handleAscendingNameSortChange(): void;
   handleAscendingCreationSortChange(): void;
+  handleCreatorChange(e: string): void;
 }
 
 export function FilterButton({
+  handleCreatorChange,
   handleAscendingNameSortChange,
   handleAscendingCreationSortChange,
   creator,
@@ -47,7 +49,7 @@ export function FilterButton({
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
               <Label htmlFor="width">Creator</Label>
-              <Select value={creator}>
+              <Select onValueChange={handleCreatorChange} value={creator}>
                 <SelectTrigger className="col-span-2">
                   <SelectValue placeholder="Choose Creator" />
                 </SelectTrigger>

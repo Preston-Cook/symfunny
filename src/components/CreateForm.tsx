@@ -26,6 +26,8 @@ import { DialogFooter } from './ui/dialog';
 import { Mic, Disc, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useToast } from './ui/use-toast';
+import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 const ACCEPTED_MIME_TYPES = [
   'audio/wav',
@@ -43,7 +45,9 @@ export default function CreateForm() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
+  const router = useRouter();
 
+  const [selectKey, setSelectKey] = useState<string>(uuidv4());
   const { startRecording, stopRecording, isRecording, recordingBlob } =
     useAudioRecorder();
 
@@ -51,7 +55,7 @@ export default function CreateForm() {
     resolver: zodResolver(createSoundSchemaClient),
     defaultValues: {
       name: undefined,
-      creator: Creator.David,
+      creator: '',
       soundFile: undefined,
     },
   });
@@ -60,7 +64,6 @@ export default function CreateForm() {
     handleSubmit,
     setValue,
     setError,
-    reset,
     formState: { errors },
   } = form;
 
@@ -143,8 +146,9 @@ export default function CreateForm() {
 
     // reset fields
     setFile(null);
+    setSelectKey(uuidv4());
     setValue('name', '');
-    setValue('creator', Creator.David);
+    setValue('creator', '');
 
     toast({
       title: 'Success!',
@@ -152,6 +156,7 @@ export default function CreateForm() {
     });
 
     setIsLoading(false);
+    router.refresh();
   }
 
   function handleClick(_e: React.MouseEvent<HTMLButtonElement>) {
@@ -181,10 +186,7 @@ export default function CreateForm() {
             render={({ field }) => (
               <FormItem className="my-2">
                 <FormLabel>Sound Creator</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select key={selectKey} onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose Creator" />
@@ -259,7 +261,7 @@ export default function CreateForm() {
             >
               {isRecording ? <Disc color="red" /> : <Mic />}
             </Button>
-            <Button className="w-[80px]" type="submit">
+            <Button className="lg:w-[80px]" type="submit">
               {isLoading ? <Spinner /> : 'Create'}
             </Button>
           </DialogFooter>
