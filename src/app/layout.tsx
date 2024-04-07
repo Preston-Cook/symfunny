@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '../context/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Head from 'next/head';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
@@ -24,6 +25,26 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html suppressHydrationWarning>
+      <Head>
+        <link rel="shortcut icon" href="/public/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/public/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/public/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/public/favicon-16x16.png"
+        />
+      </Head>
       <body
         className={cn(
           'min-h-screen flex flex-col bg-background font-sans antialiased',
