@@ -32,14 +32,19 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, creator, url }: { name: string; creator: string; url: string } =
-    body;
+  const {
+    name,
+    creator,
+    url,
+    description,
+  }: { name: string; creator: string; url: string; description: string } = body;
 
   // save new sound to db
   try {
     await prisma.sound.create({
       data: {
         name,
+        description,
         creator,
         url,
       },

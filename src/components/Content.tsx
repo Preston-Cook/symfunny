@@ -15,6 +15,7 @@ interface ContentProps {
 interface Sound {
   id: number;
   name: string;
+  description: string | null;
   creator: string;
   url: string;
   createdAt: Date;
@@ -134,13 +135,27 @@ export default function Content({ sounds }: ContentProps) {
         />
       </div>
       {filteredSounds.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 place-items-center mx-auto">
-          {filteredSounds.map((sound) => (
-            <SoundCard key={uuidv4()} />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-14 place-items-center mx-auto">
+          {filteredSounds.map(
+            ({ id, name, description, url, createdAt, creator }) => (
+              <SoundCard
+                id={id}
+                name={name}
+                description={description}
+                url={url}
+                createdAt={createdAt}
+                creator={creator}
+                key={uuidv4()}
+              />
+            ),
+          )}
         </div>
       ) : (
-        <NoResults query={q} creator={creator ?? 'Both'} />
+        <NoResults
+          isEmpty={sounds.length === 0}
+          query={q}
+          creator={creator ?? 'Both'}
+        />
       )}
     </div>
   );

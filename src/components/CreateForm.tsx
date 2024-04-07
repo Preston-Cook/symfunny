@@ -28,6 +28,7 @@ import { useEffect, useState } from 'react';
 import { useToast } from './ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
+import { Textarea } from './ui/textarea';
 
 const ACCEPTED_MIME_TYPES = [
   'audio/wav',
@@ -35,11 +36,6 @@ const ACCEPTED_MIME_TYPES = [
   'audio/webm',
   'video/webm',
 ];
-
-enum Creator {
-  David = 'David',
-  Jeremiah = 'Jeremiah',
-}
 
 export default function CreateForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -54,9 +50,10 @@ export default function CreateForm() {
   const form = useForm<z.infer<typeof createSoundSchemaClient>>({
     resolver: zodResolver(createSoundSchemaClient),
     defaultValues: {
-      name: undefined,
+      name: '',
       creator: '',
-      soundFile: undefined,
+      soundFile: '',
+      description: '',
     },
   });
 
@@ -87,6 +84,13 @@ export default function CreateForm() {
       return;
     }
     setIsLoading(true);
+
+    if (file.size > 5242880) {
+      setError('soundFile', {
+        message: 'File Exceeds 5mb',
+      });
+      return;
+    }
 
     // get presigned URL
     const res1 = await fetch('/api/upload');
@@ -148,6 +152,7 @@ export default function CreateForm() {
     setFile(null);
     setSelectKey(uuidv4());
     setValue('name', '');
+    setValue('description', '');
     setValue('creator', '');
 
     toast({
@@ -182,6 +187,19 @@ export default function CreateForm() {
           />
           <FormField
             control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="my-2">
+                <FormLabel>Sound Description (Optional)</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="creator"
             render={({ field }) => (
               <FormItem className="my-2">
@@ -206,7 +224,7 @@ export default function CreateForm() {
             name="soundFile"
             render={({ field }) => (
               <FormItem className="my-2">
-                <FormLabel>Sound File</FormLabel>
+                <FormLabel>{'Sound File (< 5mb)'}</FormLabel>
                 <FormControl className="cursor-pointer">
                   {file ? (
                     <div className="flex items-center justify-between gap-2">

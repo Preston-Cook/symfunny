@@ -41,7 +41,7 @@ export default function SearchBar({
         creator={creator}
       />
       <Input
-        placeholder={`${placeholder}...`}
+        placeholder={`${placeholder ?? 'Search'}...`}
         onChange={handleChange}
         value={query}
         name="q"

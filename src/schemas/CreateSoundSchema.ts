@@ -6,12 +6,16 @@ enum Creator {
 }
 
 export const createSoundSchemaClient = z.object({
-  name: z.string({
-    required_error: 'Title Required',
+  name: z.string().min(1, {
+    message: 'Title Required',
   }),
-  creator: z.string({
-    required_error: 'Creator Required',
-  }),
+  description: z.string().optional(),
+  creator: z
+    .string()
+    .min(1, {
+      message: 'Creator Required',
+    })
+    .refine((s) => s in Creator),
   soundFile: z.any().optional(),
 });
 
