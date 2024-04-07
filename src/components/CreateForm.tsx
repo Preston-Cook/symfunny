@@ -180,7 +180,11 @@ export default function CreateForm() {
               <FormItem className="my-2">
                 <FormLabel>Sound Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Title" {...field} />
+                  <Input
+                    className="bg-secondary"
+                    placeholder="Title"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,7 +197,11 @@ export default function CreateForm() {
               <FormItem className="my-2">
                 <FormLabel>Sound Description (Optional)</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Description" {...field} />
+                  <Textarea
+                    className="bg-secondary"
+                    placeholder="Description"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -207,7 +215,7 @@ export default function CreateForm() {
                 <FormLabel>Sound Creator</FormLabel>
                 <Select key={selectKey} onValueChange={field.onChange}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-secondary">
                       <SelectValue placeholder="Choose Creator" />
                     </SelectTrigger>
                   </FormControl>
@@ -246,7 +254,7 @@ export default function CreateForm() {
                     </div>
                   ) : (
                     <Input
-                      className="cursor-pointer data-[placeholder]:text-muted-foreground"
+                      className="cursor-pointer data-[placeholder]:text-muted-foreground bg-secondary"
                       type="file"
                       placeholder="Sound File"
                       {...field}

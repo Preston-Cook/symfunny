@@ -50,7 +50,7 @@ export function FilterButton({
             <div className="grid grid-cols-3 items-center gap-4">
               <Label htmlFor="width">Creator</Label>
               <Select onValueChange={handleCreatorChange} value={creator}>
-                <SelectTrigger className="col-span-2">
+                <SelectTrigger className="col-span-2 bg-secondary">
                   <SelectValue placeholder="Choose Creator" />
                 </SelectTrigger>
                 <SelectContent className="place:text-blue-400">
