@@ -25,9 +25,6 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html suppressHydrationWarning>
-      <Head>
-        <link rel="icon" href="/favicon.png" sizes="any" />
-      </Head>
       <body
         className={cn(
           'min-h-screen flex flex-col bg-background font-sans antialiased',
