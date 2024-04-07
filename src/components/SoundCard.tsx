@@ -48,6 +48,8 @@ export default function SoundCard({
     hour12: true,
   };
 
+  console.log(description);
+
   // Convert date to "month day, year at hour:minute" format
   const formattedDate = `${createdAt.toLocaleDateString(
     'en-US',

@@ -124,7 +124,7 @@ export default function CreateForm() {
       return;
     }
 
-    const { name, creator } = values;
+    const { name, creator, description } = values;
     const url = signedUrl.split('?')[0];
 
     // post remaining data to server
@@ -135,6 +135,7 @@ export default function CreateForm() {
       },
       body: JSON.stringify({
         name,
+        description,
         creator,
         url,
       }),
