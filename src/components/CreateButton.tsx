@@ -14,7 +14,7 @@ export function CreateButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="ml-2 md:ml-4">
+        <Button type="button" className="ml-2 md:ml-4">
           <Plus />
         </Button>
       </DialogTrigger>

@@ -167,9 +167,9 @@ export default function CreateForm() {
             name="name"
             render={({ field }) => (
               <FormItem className="my-2">
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Sound Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Name" {...field} />
+                  <Input placeholder="Title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -180,7 +180,7 @@ export default function CreateForm() {
             name="creator"
             render={({ field }) => (
               <FormItem className="my-2">
-                <FormLabel>Creator</FormLabel>
+                <FormLabel>Sound Creator</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

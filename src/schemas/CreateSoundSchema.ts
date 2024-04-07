@@ -5,17 +5,9 @@ enum Creator {
   Jeremiah = 'Jeremiah',
 }
 
-const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_MIME_TYPES = [
-  'audio/wav',
-  'audio/mpeg',
-  'audio/webm',
-  'video/webm',
-];
-
 export const createSoundSchemaClient = z.object({
   name: z.string({
-    required_error: 'Name Required',
+    required_error: 'Title Required',
   }),
   creator: z.nativeEnum(Creator, {
     required_error: 'Creator Required',

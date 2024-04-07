@@ -6,9 +6,31 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Filter } from 'lucide-react';
+import { ArrowDown10Icon, ArrowDownAZ, Filter } from 'lucide-react';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from './ui/select';
+import { Toggle } from '@/components/ui/toggle';
 
-export function FilterButton() {
+interface FilterButtonProps {
+  creator: string;
+  sortAscendingCreation: boolean;
+  sortAscendingName: boolean;
+  handleAscendingNameSortChange(): void;
+  handleAscendingCreationSortChange(): void;
+}
+
+export function FilterButton({
+  handleAscendingNameSortChange,
+  handleAscendingCreationSortChange,
+  creator,
+  sortAscendingCreation,
+  sortAscendingName,
+}: FilterButtonProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -24,36 +46,41 @@ export function FilterButton() {
           </div>
           <div className="grid gap-2">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="width">Width</Label>
-              <Input
-                id="width"
-                defaultValue="100%"
-                className="col-span-2 h-8"
-              />
+              <Label htmlFor="width">Creator</Label>
+              <Select value={creator}>
+                <SelectTrigger className="col-span-2">
+                  <SelectValue placeholder="Choose Creator" />
+                </SelectTrigger>
+                <SelectContent className="place:text-blue-400">
+                  <SelectItem value="both">Both</SelectItem>
+                  <SelectItem value="David">David</SelectItem>
+                  <SelectItem value="Jeremiah">Jeremiah</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxWidth">Max. width</Label>
-              <Input
-                id="maxWidth"
-                defaultValue="300px"
-                className="col-span-2 h-8"
-              />
+              <Label className="col-span-2" htmlFor="width">
+                Creation Date
+              </Label>
+              <Toggle
+                className="col-span-1"
+                pressed={!sortAscendingCreation}
+                onPressedChange={handleAscendingCreationSortChange}
+              >
+                <ArrowDown10Icon />
+              </Toggle>
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="height">Height</Label>
-              <Input
-                id="height"
-                defaultValue="25px"
-                className="col-span-2 h-8"
-              />
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxHeight">Max. height</Label>
-              <Input
-                id="maxHeight"
-                defaultValue="none"
-                className="col-span-2 h-8"
-              />
+              <Label className="col-span-2" htmlFor="width">
+                Sound Title
+              </Label>
+              <Toggle
+                className="col-span-1"
+                pressed={sortAscendingName}
+                onPressedChange={handleAscendingNameSortChange}
+              >
+                <ArrowDownAZ />
+              </Toggle>
             </div>
           </div>
         </div>
