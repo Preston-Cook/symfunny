@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import { v4 as uuidv4 } from 'uuid';
 import SoundCard from './SoundCard';
 import { ChangeEvent, useState } from 'react';
+import SmithWatermanGotoh from '@/lib/smithWatermanGotoh';
 
 interface ContentProps {
   sounds: Sound[];
@@ -24,6 +25,8 @@ interface FilterProps {
   sortAscendingCreation: boolean;
   sortAscendingName: boolean;
 }
+
+const swg = new SmithWatermanGotoh(-2, 1, -1);
 
 export default function Content({ sounds }: ContentProps) {
   const [{ q, creator, sortAscendingCreation, sortAscendingName }, setFilters] =
@@ -52,11 +55,27 @@ export default function Content({ sounds }: ContentProps) {
     }));
   }
 
+  function filterSounds(sound: Sound) {
+    // filter by query
+    const cleanedQuery = q.toLowerCase().replace(' ', '');
+    const cleanedTitle = sound.name.toLowerCase().replace(' ', '');
+
+    // threshold for algo
+    const highSimilarity =
+      q === '' || swg.align(cleanedQuery, cleanedTitle) > q.length * (3 / 5);
+
+    // filter by creator
+    const includesCreator = creator === 'both' || sound.creator === creator;
+
+    return highSimilarity && includesCreator;
+  }
+
   // randomly select search placeholder
   const titles = sounds.map((sound) => sound.name);
   const randomTitle = titles[Math.floor(Math.random() * titles.length)];
 
   // create filtered sounds
+  const filteredSounds = sounds.filter(filterSounds);
 
   return (
     <div className="sm:px-6 lg:px-8 py-8 flex flex-col justify-around gap-10">
@@ -77,7 +96,7 @@ export default function Content({ sounds }: ContentProps) {
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 place-items-center mx-auto">
-        {sounds.map((sound) => (
+        {filteredSounds.map((sound) => (
           <SoundCard key={uuidv4()} />
         ))}
       </div>
