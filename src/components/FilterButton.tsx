@@ -18,19 +18,15 @@ import { Toggle } from '@/components/ui/toggle';
 
 interface FilterButtonProps {
   creator: string;
-  sortAscendingCreation: boolean;
   sortAscendingName: boolean;
   handleAscendingNameSortChange(): void;
-  handleAscendingCreationSortChange(): void;
   handleCreatorChange(e: string): void;
 }
 
 export function FilterButton({
   handleCreatorChange,
   handleAscendingNameSortChange,
-  handleAscendingCreationSortChange,
   creator,
-  sortAscendingCreation,
   sortAscendingName,
 }: FilterButtonProps) {
   return (
@@ -59,18 +55,6 @@ export function FilterButton({
                   <SelectItem value="Jeremiah">Jeremiah</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label className="col-span-2" htmlFor="width">
-                Creation Date
-              </Label>
-              <Toggle
-                className="col-span-1"
-                pressed={!sortAscendingCreation}
-                onPressedChange={handleAscendingCreationSortChange}
-              >
-                <ArrowDown10Icon />
-              </Toggle>
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
               <Label className="col-span-2" htmlFor="width">

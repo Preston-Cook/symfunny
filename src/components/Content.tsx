@@ -25,53 +25,22 @@ interface Sound {
 interface FilterProps {
   q: string;
   creator: string | undefined;
-  sortAscendingCreation: boolean;
   sortAscendingName: boolean;
 }
 
 const swg = new SmithWatermanGotoh(-2, 1, -1);
 
-function sortByNameAndCreatedAt(
-  sounds: Sound[],
-  nameOrder: string = 'asc',
-  createdAtOrder: string = 'asc',
-) {
-  return [...sounds].sort((a, b) => {
-    let soundComparison = a.name.localeCompare(b.name);
-    if (nameOrder === 'desc') {
-      soundComparison *= -1; // Reverse order for descending
-    }
-    if (soundComparison !== 0) {
-      return soundComparison;
-    }
-
-    // If names are equal, compare by createdAt
-    let createdAtComparison = a.createdAt.getTime() - b.createdAt.getTime();
-    if (createdAtOrder === 'desc') {
-      createdAtComparison *= -1; // Reverse order for descending
-    }
-    return createdAtComparison;
-  });
-}
-
 export default function Content({ sounds }: ContentProps) {
-  const [{ q, creator, sortAscendingCreation, sortAscendingName }, setFilters] =
-    useState<FilterProps>({
+  const [{ q, creator, sortAscendingName }, setFilters] = useState<FilterProps>(
+    {
       q: '',
       creator: 'both',
-      sortAscendingCreation: false,
-      sortAscendingName: true,
-    });
+      sortAscendingName: false,
+    },
+  );
 
   function handleFilterChange(e: ChangeEvent<HTMLInputElement>) {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function handleAscendingCreationSortChange() {
-    setFilters((prev) => ({
-      ...prev,
-      sortAscendingCreation: !prev.sortAscendingCreation,
-    }));
   }
 
   function handleAscendingNameSortChange() {
@@ -109,11 +78,15 @@ export default function Content({ sounds }: ContentProps) {
 
   // create filtered sounds
   let filteredSounds = sounds.filter(filterSounds);
-  filteredSounds = sortByNameAndCreatedAt(
-    filteredSounds,
-    sortAscendingName ? 'asc' : 'desc',
-    sortAscendingCreation ? 'asc' : 'desc',
+  filteredSounds = filteredSounds.sort(
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
   );
+
+  if (sortAscendingName) {
+    filteredSounds = filteredSounds.sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+  }
 
   return (
     <div className="sm:px-6 lg:px-8 py-8 flex flex-col justify-around gap-10">
@@ -124,9 +97,7 @@ export default function Content({ sounds }: ContentProps) {
         <p className="mb-12 text-lg font-normal lg:text-xl sm:px-16 xl:px-48 "></p>
         <SearchBar
           handleCreatorChange={handleCreatorChange}
-          handleAscendingCreationSortChange={handleAscendingCreationSortChange}
           handleAscendingNameSortChange={handleAscendingNameSortChange}
-          sortAscendingCreation={sortAscendingCreation}
           sortAscendingName={sortAscendingName}
           creator={creator ?? 'both'}
           placeholder={randomTitle}

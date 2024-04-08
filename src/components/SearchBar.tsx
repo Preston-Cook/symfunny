@@ -11,19 +11,15 @@ interface SearchBarProps {
   query: string;
   placeholder: string;
   creator: string;
-  sortAscendingCreation: boolean;
   sortAscendingName: boolean;
   handleChange(e: ChangeEvent<HTMLInputElement>): void;
   handleCreatorChange(e: string): void;
   handleAscendingNameSortChange(): void;
-  handleAscendingCreationSortChange(): void;
 }
 
 export default function SearchBar({
   handleCreatorChange,
   handleAscendingNameSortChange,
-  handleAscendingCreationSortChange,
-  sortAscendingCreation,
   sortAscendingName,
   creator,
   query,
@@ -34,10 +30,8 @@ export default function SearchBar({
     <div className="flex max-w-md lg:max-w-lg items-center mx-auto mt-10">
       <FilterButton
         handleCreatorChange={handleCreatorChange}
-        handleAscendingCreationSortChange={handleAscendingCreationSortChange}
         handleAscendingNameSortChange={handleAscendingNameSortChange}
         sortAscendingName={sortAscendingName}
-        sortAscendingCreation={sortAscendingCreation}
         creator={creator}
       />
       <Input
