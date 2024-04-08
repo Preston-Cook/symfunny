@@ -23,6 +23,17 @@ interface SoundCardProps {
   createdAt: Date;
 }
 
+const dateFormatOptions: Intl.DateTimeFormatOptions = {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+};
+const timeFormatOptions: Intl.DateTimeFormatOptions = {
+  hour: 'numeric',
+  minute: '2-digit',
+  hour12: true,
+};
+
 export default function SoundCard({
   id,
   name,
@@ -32,9 +43,7 @@ export default function SoundCard({
   createdAt,
 }: SoundCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | undefined>(
-    typeof Audio !== 'undefined' ? new Audio(url) : undefined,
-  );
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -52,18 +61,6 @@ export default function SoundCard({
     }
   };
 
-  const dateFormatOptions: Intl.DateTimeFormatOptions = {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  };
-  const timeFormatOptions: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  };
-
-  // Convert date to "month day, year at hour:minute" format
   const formattedDate = `${createdAt.toLocaleDateString(
     'en-US',
     dateFormatOptions,
@@ -87,7 +84,7 @@ export default function SoundCard({
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>
-          {description !== ''
+          {description !== null
             ? `Description: ${description}`
             : 'No Description'}
         </CardDescription>
@@ -110,9 +107,10 @@ export default function SoundCard({
             </>
           )}
         </Button>
+        <audio ref={audioRef} src={url}></audio>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <CardDescription className="text-xs">
+        <CardDescription className="text-sm">
           {`Created by ${creator} at ${formattedDate}`}
         </CardDescription>
         <Button onClick={deleteSound} variant="secondary">
