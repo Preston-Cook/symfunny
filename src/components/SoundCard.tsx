@@ -107,7 +107,9 @@ export default function SoundCard({
             </>
           )}
         </Button>
-        <audio ref={audioRef} src={url}></audio>
+        <audio ref={audioRef}>
+          <source src={url} type="video/webm" />
+        </audio>
       </CardContent>
       <CardFooter className="flex justify-between">
         <CardDescription className="text-sm">
