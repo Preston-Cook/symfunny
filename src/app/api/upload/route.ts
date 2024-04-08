@@ -12,7 +12,6 @@ export async function GET() {
   const command = new PutObjectCommand({
     Bucket: S3_BUCKET_NAME,
     Key: key,
-    ACL: 'public-read',
     Tagging: '',
   });
 
@@ -20,8 +19,6 @@ export async function GET() {
   try {
     signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 60 });
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json({ error: err }, { status: 500 });
   }
 

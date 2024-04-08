@@ -110,13 +110,12 @@ export default function CreateForm() {
     // post to AWS
     const res2 = await fetch(signedUrl, {
       method: 'PUT',
-      headers: {
-        'Content-Type': file.type,
-      },
       body: file,
     });
 
     if (!res2.ok) {
+      console.log(res2);
+      console.log(await res2.text());
       setIsLoading(false);
       setError('root', {
         message: 'Something Went Wrong',
