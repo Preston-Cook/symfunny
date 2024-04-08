@@ -111,7 +111,7 @@ export default function CreateForm() {
     const res2 = await fetch(signedUrl, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': file.type,
       },
       body: file,
     });
