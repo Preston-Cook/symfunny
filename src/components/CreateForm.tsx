@@ -93,7 +93,11 @@ export default function CreateForm() {
     }
 
     // get presigned URL
-    const res1 = await fetch('/api/upload');
+    const res1 = await fetch('/api/upload', {
+      headers: {
+        'Content-Type': file.type,
+      },
+    });
 
     if (!res1.ok) {
       setIsLoading(false);
@@ -107,8 +111,6 @@ export default function CreateForm() {
 
     const { signedUrl }: { signedUrl: string } = data;
 
-    console.log(file.type);
-
     // post to AWS
     const res2 = await fetch(signedUrl, {
       method: 'PUT',
@@ -116,8 +118,6 @@ export default function CreateForm() {
     });
 
     if (!res2.ok) {
-      console.log(res2);
-      console.log(await res2.text());
       setIsLoading(false);
       setError('root', {
         message: 'Something Went Wrong',

@@ -6,13 +6,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME as string;
 
-export async function GET() {
+export async function GET(req: Request) {
   const key = uuidv4();
+  const fileType = req.headers.get('Content-Type');
 
   const command = new PutObjectCommand({
     Bucket: S3_BUCKET_NAME,
     Key: key,
-    ContentType: 'video/webm',
+    ContentType: fileType as string,
     Tagging: '',
   });
 
