@@ -107,6 +107,8 @@ export default function CreateForm() {
 
     const { signedUrl }: { signedUrl: string } = data;
 
+    console.log(file.type);
+
     // post to AWS
     const res2 = await fetch(signedUrl, {
       method: 'PUT',
