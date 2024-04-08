@@ -12,6 +12,8 @@ export async function GET() {
   const command = new PutObjectCommand({
     Bucket: S3_BUCKET_NAME,
     Key: key,
+    ACL: 'public-read',
+    Tagging: '',
   });
 
   let signedUrl;
