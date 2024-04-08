@@ -12,6 +12,7 @@ import {
 import { AudioLines, Trash } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from './ui/use-toast';
 
 interface SoundCardProps {
   id: number;
@@ -35,6 +36,7 @@ export default function SoundCard({
     typeof Audio !== 'undefined' ? new Audio(url) : undefined,
   );
   const router = useRouter();
+  const { toast } = useToast();
 
   const playSound = () => {
     // Access the audio object from the useRef
@@ -70,6 +72,11 @@ export default function SoundCard({
   async function deleteSound() {
     await fetch(`/api/sounds/${id}`, {
       method: 'DELETE',
+    });
+
+    toast({
+      title: 'Success!',
+      description: 'Sound Deleted',
     });
 
     router.refresh();
