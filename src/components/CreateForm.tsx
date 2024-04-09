@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from './ui/input';
 import Spinner from './Spinner';
+
 import {
   Form,
   FormControl,
@@ -67,6 +68,9 @@ export default function CreateForm() {
   useEffect(
     function () {
       if (!recordingBlob) return;
+
+      console.log(recordingBlob);
+
       const file = new File([recordingBlob], 'new-sound.webm', {
         type: 'audio/webm',
       });

@@ -84,7 +84,7 @@ export default function SoundCard({
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>
-          {description !== null
+          {description !== ''
             ? `Description: ${description}`
             : 'No Description'}
         </CardDescription>
@@ -112,7 +112,7 @@ export default function SoundCard({
         </audio>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <CardDescription className="text-sm">
+        <CardDescription className="text-xs">
           {`Created by ${creator} at ${formattedDate}`}
         </CardDescription>
         <Button onClick={deleteSound} variant="secondary">
