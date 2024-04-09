@@ -119,14 +119,6 @@ export default function Content({ sounds }: ContentProps) {
               />
             ),
           )}
-          <SoundCard
-            id={74}
-            name=""
-            description=""
-            url="https://symfunny.s3.us-east-2.amazonaws.com/sounds.mp3"
-            createdAt={new Date()}
-            creator="Preston"
-          />
         </div>
       ) : (
         <NoResults
