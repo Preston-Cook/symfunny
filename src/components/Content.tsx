@@ -119,15 +119,6 @@ export default function Content({ sounds }: ContentProps) {
               />
             ),
           )}
-          <SoundCard
-            id={98}
-            name="test"
-            description=""
-            url="/c6825622-0913-4489-9b20-837fbc70f613.weba"
-            createdAt={new Date()}
-            creator="Preston"
-            key={uuidv4()}
-          />
         </div>
       ) : (
         <NoResults

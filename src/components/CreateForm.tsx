@@ -71,8 +71,8 @@ export default function CreateForm() {
 
       console.log(recordingBlob);
 
-      const file = new File([recordingBlob], 'new-sound.weba', {
-        type: 'audio/webm',
+      const file = new File([recordingBlob], 'new-sound.webm', {
+        type: 'video/webm',
       });
 
       setFile(file);

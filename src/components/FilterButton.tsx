@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ArrowDown10Icon, ArrowDownAZ, Filter } from 'lucide-react';
+import { ArrowDownAZ, Filter } from 'lucide-react';
 import {
   Select,
   SelectTrigger,
