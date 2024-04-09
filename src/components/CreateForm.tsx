@@ -251,6 +251,7 @@ export default function CreateForm() {
                       </Button>
                       <div className="flex-1">
                         <audio
+                          preload="auto"
                           className="w-[100%]"
                           controls
                           src={URL.createObjectURL(file)}

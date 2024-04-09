@@ -48,7 +48,6 @@ export default function SoundCard({
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Cleanup previous audio element and event listener
     const cleanup = () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -61,6 +60,8 @@ export default function SoundCard({
 
   const playSound = () => {
     if (!audioRef.current) {
+      console.log(url);
+
       audioRef.current = new Audio(url);
       audioRef.current.addEventListener('ended', handleAudioEnded);
     }
