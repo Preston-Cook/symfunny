@@ -40,6 +40,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Footer />
           <Toaster />
         </ThemeProvider>
+        <script async src="https://cdn.jsdelivr.net/npm/eruda"></script>
+        <script>eruda.init();</script>
       </body>
     </html>
   );
