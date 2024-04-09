@@ -123,7 +123,7 @@ export default function Content({ sounds }: ContentProps) {
             id={74}
             name=""
             description=""
-            url="./sounds.mp3"
+            url="https://symfunny.s3.us-east-2.amazonaws.com/sounds.mp3"
             createdAt={new Date()}
             creator="Preston"
           />
