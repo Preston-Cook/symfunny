@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { AudioLines, Trash } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from './ui/use-toast';
 
@@ -43,22 +43,34 @@ export default function SoundCard({
   createdAt,
 }: SoundCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const router = useRouter();
   const { toast } = useToast();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Cleanup previous audio element and event listener
+    const cleanup = () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.removeEventListener('ended', handleAudioEnded);
+      }
+    };
+
+    return cleanup;
+  }, []);
 
   const playSound = () => {
-    // Access the audio object from the useRef
-    const audio = audioRef.current;
-    // Reset audio playback to the beginning
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play();
-      setIsPlaying(true);
-      audio.addEventListener('ended', () => {
-        setIsPlaying(false);
-      });
+    if (!audioRef.current) {
+      audioRef.current = new Audio(url);
+      audioRef.current.addEventListener('ended', handleAudioEnded);
     }
+
+    setIsPlaying(true);
+    audioRef.current.play();
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
   };
 
   const formattedDate = `${createdAt.toLocaleDateString(
@@ -107,9 +119,6 @@ export default function SoundCard({
             </>
           )}
         </Button>
-        <audio ref={audioRef}>
-          <source src={url} type="video/webm" />
-        </audio>
       </CardContent>
       <CardFooter className="flex justify-between">
         <CardDescription className="text-xs">
