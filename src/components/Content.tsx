@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import SoundCard from './SoundCard';
 import { ChangeEvent, useState } from 'react';
 import SmithWatermanGotoh from '@/lib/smithWatermanGotoh';
-import { CircleOff } from 'lucide-react';
 import NoResults from './NoResults';
 
 interface ContentProps {
@@ -124,7 +123,7 @@ export default function Content({ sounds }: ContentProps) {
             id={98}
             name="test"
             description=""
-            url="/sounds.mp3"
+            url="/c6825622-0913-4489-9b20-837fbc70f613.weba"
             createdAt={new Date()}
             creator="Preston"
             key={uuidv4()}

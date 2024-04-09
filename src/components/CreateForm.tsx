@@ -71,7 +71,7 @@ export default function CreateForm() {
 
       console.log(recordingBlob);
 
-      const file = new File([recordingBlob], 'new-sound.webm', {
+      const file = new File([recordingBlob], 'new-sound.weba', {
         type: 'audio/webm',
       });
 
@@ -118,6 +118,9 @@ export default function CreateForm() {
     // post to AWS
     const res2 = await fetch(signedUrl, {
       method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
       body: file,
     });
 
